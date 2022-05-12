@@ -16,12 +16,12 @@ Loose guidelines to check i've got everything I need.
         - [x] Default latest
 
     v0.1.0
-    - [ ] pacman
-        - [ ] ca-certificate
-        - [ ] general tools (curl, wget, less, unzip, rsync, bash, bash-completion)
-        - [ ] python
-        - [ ] python-numpy (used for websockify for latancy reduction.)
-        - [ ] ARG $pacman_packages
+    - [x] pacman
+        - [x] ca-certificates
+        - [x] general tools (example... curl, wget, less, unzip, rsync, bash, bash-completion)
+        - [x] python
+        - [x] python-numpy (used for websockify for latancy reduction.)
+        - [x] ARG $pacman_packages
 
     v0.2.0
     - [ ] local Config
@@ -58,3 +58,15 @@ This section is to be filled in once at Version 1.
 ## Docker Compose
 
 This section is to be filled in once at Version 1.
+
+---
+
+## Docker Build Arguments
+
+Build version of arch linux from the docker repositroy.
+
+> arch_version='base-20220424.0.54084'
+
+install additional pacman packages to what is already preset.
+
+> pacman_packages='less curl steam git'
