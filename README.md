@@ -1,7 +1,7 @@
 # arch-plasma
 
 
-Create a baseline [Archlinux](https://hub.docker.com/_/archlinux) enviroment using KDE [Plasma](https://kde.org/) with [NOVNC](https://github.com/novnc/noVNC) and [Webockify](https://github.com/novnc/websockify) pre-configured for other to to use for their docker containers.
+Create a baseline [Archlinux](https://hub.docker.com/_/archlinux) enviroment using KDE [Plasma](https://kde.org/) with [NoVNC](https://github.com/novnc/noVNC) and [Webockify](https://github.com/novnc/websockify) pre-configured for other to to use for their docker containers.
 
 
 ---
@@ -23,7 +23,7 @@ Loose guidelines to check i've got everything I need.
         - [x] python-numpy (used for websockify for latancy reduction.)
         - [x] ARG $pacman_packages
 
-    v0.2.0
+    v0.2.0 - removed as user can change language from US when they build.
     - [ ] local Config
         - [ ] LANG = US default
         - [ ] ARG $LANG (to change default language. Need to account for language packs.)
@@ -67,6 +67,15 @@ Build version of arch linux from the docker repositroy.
 
 > arch_version='base-20220424.0.54084'
 
-install additional pacman packages to what is already preset.
+Install additional pacman packages to what is already preset.
 
-> pacman_packages='less curl steam git'
+> pacman_packages='less curl steam'
+
+Get the version of NoVNC by the release version. Excludes any pre-releases.
+
+> novnc_version='1.2'
+
+Get the version of websockify by the release version. Excludes any pre-releases.
+
+> websockify_version='0.8'
+
