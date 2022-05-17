@@ -16,11 +16,7 @@ RUN \
 
 ARG pacman_packages
 
-# add Pacman utility packages
-# xorg = display service
-# plasma = desktop env
-# plasma-wayland-session = same as x11
-#kde-application = misc desktop apps.
+
 RUN \
     echo "**** Pacman  ****" \
     && pacman -S --noconfirm  \
@@ -41,7 +37,6 @@ RUN \
 # noVNC version. wildcard the version. Example 1.2.0
 ARG novnc_version
 
-
 # download NoVNC
 RUN \
     echo "**** NoVNC Install & Setup ****" \
@@ -53,6 +48,7 @@ RUN \
     tar xzC /opt/novnc --strip-components=1\
     && \
     echo
+
 
 # websockify version. wildcard the version. Example 1.2.0
 ARG websockify_version
@@ -70,6 +66,31 @@ RUN \
     && \
     echo
 
+RUN \
+    echo "**** websockify install ****" \
+    && cd /opt/novnc/utils/websockify \
+    && python3 setup.py install \
+    && cd / \
+    && \
+    echo
+
+
+# certificate location
+ENV \
+    SSL_CERT="/opt/ssl/cert.pem" \
+    SSL_KEY="/opt/ssl/key.pem"
+
+# Generate cert and key for wildcard
+# possibly add option to skip section if cert&key is changed.
+RUN \
+    echo "**** SelfSign Cert & key ****" \
+    && mkdir /opt/ssl && cd /opt/ssl \
+    && openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 365 -nodes -batch \
+    && cd / \
+    && \
+    echo
+
+# need to change conf.d file for websockify to include ENV
 
 # Usual way of starting. unable to sue as not sharing with system.
 # systemctl enable sddn.service
@@ -77,19 +98,20 @@ RUN \
 
 # screen size
 ENV \
+    DESKTOP_SESSION=plasma
     DISPLAY=:0.0 \
     DISPLAY_WIDTH=1024 \
     DISPLAY_HEIGHT=768
 
-# Copy over the supervisord config files.
-copy conf.d /opt/conf.d
+# copy over the supervisord config files.
+COPY conf.d /opt/conf.d
 
 COPY supervisord.conf /opt/
 
-# websockify port
-EXPOSE 8888
+# novnc port for testing.
+EXPOSE 5959
 
- Copy and run the enterypoint script.
+# Copy and run the enterypoint script.
 COPY --chmod=755 entrypoint.sh /opt/
 ENTRYPOINT ["/bin/sh"]
-#CMD ["/opt/entrypoint.sh"]
+CMD ["/opt/entrypoint.sh"]

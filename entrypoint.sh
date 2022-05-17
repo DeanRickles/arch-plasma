@@ -1,5 +1,5 @@
 #!/bin/bash
 set -ex
 
-echo "**** Entrypoint ****"
+echo "**** Starting Container: Entrypoint ****"
 exec supervisord -c /opt/supervisord.conf
