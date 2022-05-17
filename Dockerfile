@@ -98,7 +98,7 @@ RUN \
 
 # screen size
 ENV \
-    DESKTOP_SESSION=plasma
+    DESKTOP_SESSION=plasma \
     DISPLAY=:0.0 \
     DISPLAY_WIDTH=1024 \
     DISPLAY_HEIGHT=768

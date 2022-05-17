@@ -1,4 +1,6 @@
 # VERSION HISTORY.
+    v0.3.1 - 17/05/2022
+    * Fixed a missing slash.
     v0.3.0 - 17/05/2022
     * removed adding language for now.
     * enabled supervisor.
