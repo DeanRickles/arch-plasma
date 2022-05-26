@@ -11,9 +11,6 @@ How it works:
     3) noVNC & websockify - A HTML5 canvas vnc viewer.
     4) Dbus + KDE Plamsa - starts the desktop enviroment.
 
-https://askubuntu.com/questions/456689/error-xdg-runtime-dir-not-set-in-the-environment-when-attempting-to-run-naut
-
-
 ---
 
 ## Planned todo:
@@ -47,6 +44,7 @@ v0.3.0
     - [x] Downloaded
     - [x] Installed
     - [ ] Configuration
+    - [ ] add audio passthrough
 - [x] SSL certificate (allow personal re-defined file?)
     - [x] ENV Cert
     - [x] ENV Key
@@ -55,13 +53,24 @@ v0.4.0
 - [ ] KDE
     - [x] Enable
     - [ ] Configuration
-    - [ ] Remove un-required packages.
+    - [x] Remove un-required packages.
 
+v0.5.0
+- [ ] Container size reduction.
+    - [ ] xorg
+    - [ ] novnc
+    - [ ] websockify
+
+v0.6.0
+- [ ] Entrypoint additions
+    - [ ] Enable / Disable desktop config
+    - [ ] enable to use GIT themes?
 
 Removed as user can change language from US when they build.
 - [ ] local Config
     - [ ] LANG = US default
     - [ ] ARG $LANG (to change default language. Need to account for language packs.)
+
 
 ---
 

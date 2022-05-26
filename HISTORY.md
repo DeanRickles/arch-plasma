@@ -1,4 +1,6 @@
 # VERSION HISTORY.
+    v0.3.3 - 26/05/2022
+    * Removed un-required plasma packages to minumise build size.
     v0.3.2 - 26/05/2022
     * added logging to supervisord files.
     * moved ca-certificates into Pacman section.
