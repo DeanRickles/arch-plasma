@@ -4,52 +4,64 @@
 Create a baseline [Archlinux](https://hub.docker.com/_/archlinux) enviroment using KDE [Plasma](https://kde.org/) with [NoVNC](https://github.com/novnc/noVNC) and [Webockify](https://github.com/novnc/websockify) pre-configured for other to to use for their docker containers.
 
 
+How it works:
+
+    1) XVFB - X11 in a virtual framebuffer.
+    2) X11vnc - A VNC server that scrapes the above X11 server.
+    3) noVNC & websockify - A HTML5 canvas vnc viewer.
+    4) Dbus + KDE Plamsa - starts the desktop enviroment.
+
+https://askubuntu.com/questions/456689/error-xdg-runtime-dir-not-set-in-the-environment-when-attempting-to-run-naut
+
+
 ---
 
 ## Planned todo:
 
 Loose guidelines to check i've got everything I need.
 
-    v0.0.0
-    - [x] archlinux version at build
-        - [x] arg $arch_version
-        - [x] Default latest
+v0.0.0
+- [x] archlinux version at build
+    - [x] arg $arch_version
+    - [x] Default latest
 
-    v0.1.0
-    - [x] pacman
-        - [x] ca-certificates
-        - [x] general tools (example... curl, wget, less, unzip, rsync, bash, bash-completion)
-        - [x] python
-        - [x] python-numpy (used for websockify for latancy reduction.)
-        - [x] ARG $pacman_packages
+v0.1.0
+- [x] pacman
+    - [x] ca-certificates
+    - [x] general tools (example... curl, wget, less, unzip, rsync, bash, bash-completion)
+    - [x] python
+    - [x] python-numpy (used for websockify for latancy reduction.)
+    - [x] ARG $pacman_packages
 
-    V0.2.0
-    - [x] xvfb
+V0.2.0
+- [x] xvfb
 
-    v0.3.0
-    - [ ] NOVNC
-        - [x] Downladed
-        - [ ] Configuration
-        - [ ] Setup with default details but configure (ENV & ARG) for password.
-        - [ ] ARG novnc_password.
-    - [ ] Websockify
-        - [x] Downloaded
-        - [ ] Configuration
-    - [x] SSL certificate (allow personal re-defined file?)
-        - [x] ENV Cert
-        - [x] ENV Key
+v0.3.0
+- [ ] NOVNC
+    - [x] Downladed
+    - [x] Installed
+    - [ ] Configuration
+    - [ ] Setup with default details but configure (ENV & ARG) for password.
+    - [ ] ARG novnc_password.
+- [ ] Websockify
+    - [x] Downloaded
+    - [x] Installed
+    - [ ] Configuration
+- [x] SSL certificate (allow personal re-defined file?)
+    - [x] ENV Cert
+    - [x] ENV Key
 
-    v0.4.0
-    - [ ] KDE
-        - [ ] Enable
-        - [ ] Configuration
-        - [ ] Remove un-required packages.
+v0.4.0
+- [ ] KDE
+    - [x] Enable
+    - [ ] Configuration
+    - [ ] Remove un-required packages.
 
 
-    Removed as user can change language from US when they build.
-    - [ ] local Config
-        - [ ] LANG = US default
-        - [ ] ARG $LANG (to change default language. Need to account for language packs.)
+Removed as user can change language from US when they build.
+- [ ] local Config
+    - [ ] LANG = US default
+    - [ ] ARG $LANG (to change default language. Need to account for language packs.)
 
 ---
 
@@ -97,6 +109,4 @@ Get the version of NoVNC by the release version. Excludes any pre-releases.
 Get the version of websockify by the release version. Excludes any pre-releases.
 
 > websockify_version='0.8'
-
-
 

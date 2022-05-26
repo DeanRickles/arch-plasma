@@ -4,35 +4,26 @@ FROM archlinux:${arch_version}
 
 LABEL maintainer="Dean <dean@rickles.co.uk>"
 
-
-# add Certifcate authority certs.
-RUN \
-    echo "**** Pacman  ****" \
-    && pacman -Syyu --noconfirm \
-        ca-certificates \
-    && pacman -Scc --noconfirm \
-    && \
-    echo
-
 ARG pacman_packages
 
 
 RUN \
     echo "**** Pacman  ****" \
-    && pacman -S --noconfirm  \
+    && pacman -Syyu --noconfirm  \
+        ca-certificates  \
         supervisor \
         xorg-server-xvfb \
         x11vnc \
         python \
         python-numpy \
         xorg \
+        xorg-xinit \
         plasma-meta \
-        #kde-applications \
+        kde-applications-meta \
         $pacman_packages \
     && pacman -Scc --noconfirm \
     && \
     echo
-
 
 # noVNC version. wildcard the version. Example 1.2.0
 ARG novnc_version
@@ -80,7 +71,7 @@ ENV \
     SSL_CERT="/opt/ssl/cert.pem" \
     SSL_KEY="/opt/ssl/key.pem"
 
-# Generate cert and key for wildcard
+# Generate cert and key for websockify ssl
 # possibly add option to skip section if cert&key is changed.
 RUN \
     echo "**** SelfSign Cert & key ****" \
@@ -89,12 +80,6 @@ RUN \
     && cd / \
     && \
     echo
-
-# need to change conf.d file for websockify to include ENV
-
-# Usual way of starting. unable to sue as not sharing with system.
-# systemctl enable sddn.service
-# system enable network manager.service
 
 # screen size
 ENV \

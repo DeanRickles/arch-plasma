@@ -1,4 +1,11 @@
 # VERSION HISTORY.
+    v0.3.2 - 26/05/2022
+    * added logging to supervisord files.
+    * moved ca-certificates into Pacman section.
+    * added pacman package refresh to Pacman section.
+    * enabled kde-applications-meta to pacman section.
+    * added xorg-xinit.
+    * added altered conf.d file for KDE-plasma and dbus.
     v0.3.1 - 17/05/2022
     * Fixed a missing slash.
     v0.3.0 - 17/05/2022
