@@ -88,13 +88,18 @@ This section is to be filled in once at Version 1.
 ---
 ## Enviroment aguments
 
-Display Settings
+Password:
+
+    root_passwd='root'
+    novnc_passwd='P@ssw0rd'
+
+Display Settings:
 
     DISPLAY=:0.0
     DISPLAY_WIDTH=1024
     DISPLAY_HEIGHT=768
 
-Websockify SSL
+Websockify SSL:
 
     SSL_CERT="/opt/ssl/cert.pem"
     SSL_KEY="/opt/ssl/key.pem"

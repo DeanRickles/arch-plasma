@@ -16,13 +16,17 @@ RUN \
 # Total Installed Size:  66.67 MiB
 # Net Upgrade Size:      -0.72 MiB
 
-## use to add any other packages on the fly through a build.
+
 ARG pacman_packages
+
 RUN \
     echo "**** Pacman:: Python + pacman_packages ****" \
     && pacman -S --noconfirm  \
+        # numpty to decrease latency with websockify
         python \
         python-numpy \
+        # use to add any other packages on the fly through a build.
+        # Possibly move into enterypoint.sh to allow pacman package install after build.
         $pacman_packages \
     && pacman -Scc --noconfirm \
     && \
@@ -44,19 +48,33 @@ RUN \
 # Total Download Size:   101.13 MiB
 # Total Installed Size:  361.59 MiB
 
-
-# selecting required packages.
 RUN \
-    echo "**** Pacman:: KDE Plasma  ****" \
+    echo "**** Pacman:: KDE Plasma-desktop  ****" \
     && pacman -S --noconfirm  \
-    # KDE Plasma Desktop
         plasma-desktop \
+        # # plasma-desktop package breakdown
+        # # ----------------------------------------
+        # # A framework for searching and managing metadata
+        # baloo \
+        # # GNU version of awk
+        # gawk \
+        # # Porting aid from KDELibs4
+        # kdelibs4support \
+        # # KDE menu editor
+        # kmenuedit \
+        # # IBus support library
+        # libibus \
+        # # Daemon providing a polkit authentication UI for KDE
+        # polkit-kde-agent \
+        # # KDE system manager for hardware, software, and workspaces
+        # systemsettings \
+        # # Manage user directories like ~/Desktop and ~/Music
+        # # xdg-user-dirs \
     && pacman -Scc --noconfirm \
     && \
     echo
-# Total Download Size:    332.98 MiB
-# Total Installed Size:  1366.11 MiB
-
+# Total Download Size:    333.13 MiB
+# Total Installed Size:  1366.08 MiB
 
 # noVNC version. wildcard the version. Example 1.2.0
 ARG novnc_version
@@ -87,6 +105,7 @@ RUN \
         head -n 1 | cut -d '"' -f 4 | \
         xargs -I % curl -L % | \
         tar xzC /opt/novnc/utils/websockify  --strip-components=1 \
+        --exclude='tests' --exclude='docs' --exclude='Windows' \
     && \
     echo
 # 564K    /tmp/websockify
@@ -100,7 +119,7 @@ RUN \
     echo
 
 
-# certificate location
+# certificate location - unsure if this is working. Need to review.
 ENV \
     SSL_CERT="/opt/ssl/cert.pem" \
     SSL_KEY="/opt/ssl/key.pem"
@@ -113,6 +132,16 @@ RUN \
     && cd / \
     && \
     echo
+
+# user-specific directory in which it can store small temporary files.
+ENV \
+    XDG_RUNTIME_DIR=/tmp/runtime \
+    RUNLEVEL=3
+
+# passwd section.
+ENV \
+    root_passwd="root" \
+    novnc_passwd=""
 
 # screen size
 ENV \
