@@ -12,6 +12,9 @@ RUN \
     && pacman -Scc --noconfirm \
     && \
     echo
+# Total Download Size:   18.26 MiB
+# Total Installed Size:  66.67 MiB
+# Net Upgrade Size:      -0.72 MiB
 
 ## use to add any other packages on the fly through a build.
 ARG pacman_packages
@@ -24,6 +27,8 @@ RUN \
     && pacman -Scc --noconfirm \
     && \
     echo
+# Total Download Size:   19.76 MiB
+# Total Installed Size:  95.15 MiB
 
 RUN \
     echo "**** Pacman:: X11  ****" \
@@ -36,48 +41,21 @@ RUN \
     && pacman -Scc --noconfirm \
     && \
     echo
+# Total Download Size:   101.13 MiB
+# Total Installed Size:  361.59 MiB
 
-#RUN \
-#    echo "**** Pacman:: KDE Plasma  ****" \
-#    && pacman -S --noconfirm  \
-#        plasma-meta \
-#        #kde-applications-meta \ # removed while testing to see if needed.
-#        #Plasma-nm \  plasma network manager - Proberly not needed.
-#    && pacman -Scc --noconfirm \
-#    && \
-#    echo
 
 # selecting required packages.
 RUN \
     echo "**** Pacman:: KDE Plasma  ****" \
     && pacman -S --noconfirm  \
-        discover \
-        plasma-workspace \
-        drkonqi  \
-        konsole \
-        #khotkeys  \
-        #kinfocenter \
-        #kscreen \
-        #ksshaskpass \
-        #kwallet-pam \
-        #kwayland-integration \
-        #kwrited \
-        #plasma-browser-integration \
+    # KDE Plasma Desktop
         plasma-desktop \
-        #plasma-disks \
-        #plasma-firewall \
-        #plasma-nm \
-        plasma-pa \
-        #plasma-systemmonitor \
-        #plasma-thunderbolt \
-        #plasma-vault \
-        #plasma-workspace-wallpapers \
-        #powerdevil \
-        #sddm-kcm \
-        #xdg-desktop-portal-kde \
     && pacman -Scc --noconfirm \
     && \
     echo
+# Total Download Size:    332.98 MiB
+# Total Installed Size:  1366.11 MiB
 
 
 # noVNC version. wildcard the version. Example 1.2.0
@@ -90,10 +68,12 @@ RUN \
         grep tarball_url | grep -v "-" | grep ${novnc_version:-''} | \
         head -n 1 | cut -d '"' -f 4 | \
         xargs -I % curl -L % | \
-        tar xzC /opt/novnc --strip-components=1\
+        tar xzC /opt/novnc --strip-components=1 \
+        # Removes excess files not required.
+        --exclude='tests' --exclude='docs' --exclude='debian' --exclude='README.md' \
     && \
     echo
-
+# 956K    /tmp/novnc/
 
 # websockify version. wildcard the version. Example 1.2.0
 ARG websockify_version
@@ -109,6 +89,7 @@ RUN \
         tar xzC /opt/novnc/utils/websockify  --strip-components=1 \
     && \
     echo
+# 564K    /tmp/websockify
 
 RUN \
     echo "**** websockify install ****" \
@@ -140,10 +121,8 @@ ENV \
     DISPLAY_WIDTH=1024 \
     DISPLAY_HEIGHT=768
 
-
 # copy over the supervisord config files.
 COPY conf.d /opt/conf.d
-
 COPY supervisord.conf /opt/
 
 # novnc port for testing.

@@ -1,4 +1,10 @@
 # VERSION HISTORY.
+    v0.3.5
+    * Removed test files from import of noVNC
+    * Temporary added notes for each KDE Plasma packages. Looking to how to reduce size.
+    v0.3.4
+    * added dockerfile inspection for github workflow.
+    * added code inspection for github workflow.
     v0.3.3 - 26/05/2022
     * Removed un-required plasma packages to minumise build size.
     v0.3.2 - 26/05/2022
