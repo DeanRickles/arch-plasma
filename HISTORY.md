@@ -1,5 +1,9 @@
 # VERSION HISTORY.
-    v0.3.6 
+    v0.4.0
+    * Removed adding audio to noVNC to it's own minor version.
+    * Added pulseaudio.
+    * Added enviroment port for noVNC at run.
+    v0.3.6
     * Removed folders not required for websockify.
     * Added variable to set root password.
     * Added command to set root password based on root password in entrypoint.sh.

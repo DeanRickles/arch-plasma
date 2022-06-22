@@ -2,7 +2,6 @@
 ARG arch_version=latest
 FROM archlinux:${arch_version}
 
-
 LABEL maintainer="Dean <dean@rickles.co.uk>"
 
 RUN \
@@ -16,7 +15,6 @@ RUN \
 # Total Installed Size:  66.67 MiB
 # Net Upgrade Size:      -0.72 MiB
 
-
 ARG pacman_packages
 
 RUN \
@@ -25,7 +23,7 @@ RUN \
         # numpty to decrease latency with websockify
         python \
         python-numpy \
-        # use to add any other packages on the fly through a build.
+        # use to add any other packages on the fly through at build.
         # Possibly move into enterypoint.sh to allow pacman package install after build.
         $pacman_packages \
     && pacman -Scc --noconfirm \
@@ -48,28 +46,24 @@ RUN \
 # Total Download Size:   101.13 MiB
 # Total Installed Size:  361.59 MiB
 
+# TODO: Setup pulseadio with FFMPEG for audio output via VNC.
+# Possible solution = https://github.com/novnc/noVNC/issues/302#issuecomment-864419873
+run \
+    echo "**** Pacman:: Audio  ****" \
+    && pacman -S --noconfirm  \
+        pulseaudio \
+        # pulseaudio-libs \ # questionable.
+    && pacman -Scc --noconfirm \
+    && \
+    echo
+# pulseaudio
+# Total Download Size:    8.04 MiB
+# Total Installed Size:  28.10 MiB
+
 RUN \
     echo "**** Pacman:: KDE Plasma-desktop  ****" \
     && pacman -S --noconfirm  \
         plasma-desktop \
-        # # plasma-desktop package breakdown
-        # # ----------------------------------------
-        # # A framework for searching and managing metadata
-        # baloo \
-        # # GNU version of awk
-        # gawk \
-        # # Porting aid from KDELibs4
-        # kdelibs4support \
-        # # KDE menu editor
-        # kmenuedit \
-        # # IBus support library
-        # libibus \
-        # # Daemon providing a polkit authentication UI for KDE
-        # polkit-kde-agent \
-        # # KDE system manager for hardware, software, and workspaces
-        # systemsettings \
-        # # Manage user directories like ~/Desktop and ~/Music
-        # # xdg-user-dirs \
     && pacman -Scc --noconfirm \
     && \
     echo
@@ -78,9 +72,8 @@ RUN \
 
 # noVNC version. wildcard the version. Example 1.2.0
 ARG novnc_version
-# download NoVNC
 RUN \
-    echo "**** NoVNC Install & Setup ****" \
+    echo "**** NoVNC download ****" \
     && mkdir /opt/novnc \
     && curl -s https://api.github.com/repos/novnc/novnc/releases |  \
         grep tarball_url | grep -v "-" | grep ${novnc_version:-''} | \
@@ -89,14 +82,14 @@ RUN \
         tar xzC /opt/novnc --strip-components=1 \
         # Removes excess files not required.
         --exclude='tests' --exclude='docs' --exclude='debian' --exclude='README.md' \
+        # Force vnc.html to be used for novnc, to avoid having the directory listing page.
+        ln -s /opt/novnc/vnc.html /opt/novnc/index.html \
     && \
     echo
-# 956K    /tmp/novnc/
+# Total Download Size:      956 K
 
 # websockify version. wildcard the version. Example 1.2.0
 ARG websockify_version
-# need to look at what to exclude from extration to reduce size.
-# download websockify
 RUN \
     echo "**** websockify download ****" \
     && mkdir /opt/novnc/utils/websockify \
@@ -108,7 +101,7 @@ RUN \
         --exclude='tests' --exclude='docs' --exclude='Windows' \
     && \
     echo
-# 564K    /tmp/websockify
+# Total Download Size:      564K
 
 RUN \
     echo "**** websockify install ****" \
@@ -117,7 +110,6 @@ RUN \
     && cd / \
     && \
     echo
-
 
 # certificate location - unsure if this is working. Need to review.
 ENV \
@@ -154,8 +146,10 @@ ENV \
 COPY conf.d /opt/conf.d
 COPY supervisord.conf /opt/
 
-# novnc port for testing.
-EXPOSE 5959
+# Set the docker expose ports.
+ENV \
+    novnc_port=5900
+EXPOSE ${novnc_port}
 
 # Copy and run the enterypoint script.
 COPY --chmod=755 entrypoint.sh /opt/

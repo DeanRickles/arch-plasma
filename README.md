@@ -34,17 +34,16 @@ V0.2.0
 - [x] xvfb
 
 v0.3.0
-- [ ] NOVNC
+- [x] NOVNC
     - [x] Downladed
     - [x] Installed
-    - [ ] Configuration
-    - [ ] Setup with default details but configure (ENV & ARG) for password.
-    - [ ] ARG novnc_password.
-- [ ] Websockify
+    - [x] Configuration
+    - [x] Setup with default details but configure (ENV & ARG) for password.
+    - [x] ARG novnc_passwd.
+- [x] Websockify
     - [x] Downloaded
     - [x] Installed
-    - [ ] Configuration
-    - [ ] add audio passthrough
+    - [x] Configuration
 - [x] SSL certificate (allow personal re-defined file?)
     - [x] ENV Cert
     - [x] ENV Key
@@ -57,14 +56,18 @@ v0.4.0
 
 v0.5.0
 - [ ] Container size reduction.
-    - [ ] xorg
-    - [ ] novnc
-    - [ ] websockify
+    - [x] xorg
+    - [x] novnc
+    - [x] websockify
+    - [ ] KDE-Plasma. Struggling to reduce size of package.
 
 v0.6.0
 - [ ] Entrypoint additions
     - [ ] Enable / Disable desktop config
     - [ ] enable to use GIT themes?
+
+v1.2.0
+- [ ] noVNC add audio passthrough.
 
 Removed as user can change language from US when they build.
 - [ ] local Config
@@ -92,6 +95,10 @@ Password:
 
     root_passwd='root'
     novnc_passwd='P@ssw0rd'
+
+expose port:
+    novnc_port=5900
+    pulseaudio_port=5901
 
 Display Settings:
 
