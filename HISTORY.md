@@ -1,4 +1,6 @@
 # VERSION HISTORY.
+    v0.4.1
+    * Bug: Forgot to add && for the link.
     v0.4.0
     * Removed adding audio to noVNC to it's own minor version.
     * Added pulseaudio.
@@ -25,7 +27,7 @@
     * Added xorg-xinit.
     * Added altered conf.d file for KDE-plasma and dbus.
     v0.3.1 - 17/05/2022
-    * Fixed a missing slash.
+    * BUG: Fixed a missing slash.
     v0.3.0 - 17/05/2022
     * Removed adding language for now.
     * Enabled supervisor.
@@ -36,7 +38,7 @@
     v0.2.1 - 13/05/2022
     * NoVNC & websockify release downloaded into /opt/
     * Started adding supervisor conf/d
-    * Started groundwork for plasma.
+    * Started ground work for plasma.
     v0.1.0 - 12/05/2022
     * Added pacman and pacman_arg
     v0.0.0 - 12/05/2022

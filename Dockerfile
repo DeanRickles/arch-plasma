@@ -83,7 +83,7 @@ RUN \
         # Removes excess files not required.
         --exclude='tests' --exclude='docs' --exclude='debian' --exclude='README.md' \
         # Force vnc.html to be used for novnc, to avoid having the directory listing page.
-        ln -s /opt/novnc/vnc.html /opt/novnc/index.html \
+    && ln -s /opt/novnc/vnc.html /opt/novnc/index.html \
     && \
     echo
 # Total Download Size:      956 K

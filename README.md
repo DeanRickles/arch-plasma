@@ -97,8 +97,8 @@ Password:
     novnc_passwd='P@ssw0rd'
 
 expose port:
+
     novnc_port=5900
-    pulseaudio_port=5901
 
 Display Settings:
 
