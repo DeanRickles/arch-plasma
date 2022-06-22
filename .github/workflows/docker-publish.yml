@@ -6,14 +6,14 @@ name: Docker
 # documentation.
 
 on:
-  # schedule:
-  #   - cron: '41 11 * * *'
+  #schedule:
+  #  - cron: '24 12 * * *'
   push:
-    branches: [ "main" ]
+    branches: [ main ]
     # Publish semver tags as releases.
     tags: [ 'v*.*.*' ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ main ]
 
 env:
   # Use docker.io for Docker Hub if empty
@@ -90,5 +90,4 @@ jobs:
           COSIGN_EXPERIMENTAL: "true"
         # This step uses the identity token to provision an ephemeral certificate
         # against the sigstore community Fulcio instance.
-        # run: cosign sign ${{ steps.meta.outputs.tags }}@${{ steps.build-and-push.outputs.digest }}
-          run: cosign sign ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.build-and-push.outputs.digest }}
+        run: cosign sign ${{ steps.meta.outputs.tags }}@${{ steps.build-and-push.outputs.digest }}
